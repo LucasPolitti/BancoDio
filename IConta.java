@@ -4,6 +4,15 @@ public interface IConta {
 
     void depositar(double valor);
 
-    void transferir(double valor, Conta Destino);
+    void transferir(double valor, IConta Destino);
+
+    void imprimirInfosComuns();
+
+
+
+
+
+
+
     
 }

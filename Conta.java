@@ -1,8 +1,24 @@
-public abstract class Conta implements IConta { /*A classe abstrata não pode ser instanciada e nesse casso faz sentido, porque a classe conta é uma classe mãe e só faz sentido "dar um new" em uma classe ContaPoupança ou ContaCorrente.*/
+public abstract class Conta implements IConta {
+    
+    /*A classe abstrata não pode ser instanciada e nesse caso faz sentido, porque a classe conta é uma classe mãe e só faz sentido "dar um new" em uma classe ContaPoupança ou ContaCorrente.*/
 
-    public int agencia;
-    public int numero;
-    public double saldo;
+
+    private static int SEQUENCIAL = 0;
+    protected int agencia;
+    protected int numero;
+    protected double saldo;
+    private static final int AGENCIA_PADRAO = 0001;
+    private Cliente cliente;
+
+
+
+    public Conta(Cliente cliente) {
+        this.agencia = Conta.AGENCIA_PADRAO;
+        this.numero = SEQUENCIAL++;
+        this.cliente = cliente;
+
+    }
+
 
 
 
@@ -20,21 +36,31 @@ public abstract class Conta implements IConta { /*A classe abstrata não pode se
 
     @Override
     public void sacar(double valor) {
-        // TODO Auto-generated method stub
+        saldo = saldo - valor;
         
     }
 
     @Override
     public void depositar(double valor) {
-        // TODO Auto-generated method stub
+        saldo = saldo + valor;
         
     }
 
     @Override
-    public void transferir(double valor, Conta Destino) {
-        // TODO Auto-generated method stub
+    public void transferir(double valor, IConta Destino) {
+        this.sacar(valor);
+        Destino.depositar(valor);
         
     }
+
+    
+    public void imprimirInfosComuns() {
+        System.out.println(String.format("Titular: %s ", this.cliente.getNome()));
+        System.out.println(String.format("Agencia: %d ", this.agencia));
+        System.out.println(String.format("Conta: %d ", this.numero));
+        System.out.println(String.format("Saldo: %.2f ", this.saldo));
+    }
+
     
     
 
